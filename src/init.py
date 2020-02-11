@@ -5,7 +5,6 @@ import pexpect
 print('Initializing Container')
 
 if os.getenv('VPN_ENABLE', True):
-    vpnAuth = os.getenv('VPN_AUTH', True)
     username = os.getenv('WINDSCRIBE_USERNAME', True)
     password = os.getenv('WINDSCRIBE_PASSWORD', True)
     location = "best"
