@@ -18,22 +18,9 @@ The architectures supported by this image are:
 
 ## Getting Started
 
-In order to run the container, you will need to create an auth.conf file with the username and password details. Then you can run the container command below it.
+### Container Command
 
-### 1. Authorization
-You will need to create a config file to auto-login to Windscribe. The location of the config file will be the path set in the environment variable VPN_AUTH (/config/auth.conf). The file itself should contain three lines (no spaces).
-```
-<username>
-<password>
-<location|best>
-```
-The file will be automatically loaded when the container is started, otherwise the container will fail to connect and terminate. 
-
-The location line is optional, but if defined will let you connect to a specific proxy location. For options, view the _Windscribe Location Options_ for options.
-
-### 2. Container Command
-
-To run the docker image, below is the typical configuration...
+To run the docker image, below is the minimal configuration:
 
 ```cmd
 docker run \
@@ -70,6 +57,7 @@ the Windscribe service has enough permissions to change the network configuratio
 | DEL_GID | 1000 | The ID used for the main deluge group account. Changing this value could break the config folder. |
 | WINDSCRIBE_USERNAME | Windscribe login. |
 | WINDSCRIBE_PASSWORD | Windscribe password. |
+| WINDSCRIBE_LOCATION | Windscribe endpoint label. Defaults to best. |
 | HOME | /config | The path to the home directory. |
 
 ### Windscribe Location Options
@@ -77,6 +65,7 @@ You may use any of the values to select a location. The Label column allows conn
 
 | Location | Short Name | City Name | Label |
 | -------- | ---------- | --------- | ----- |
+|Auto-select|Best||best|
 |US Central|US-C|Atlanta|Mountain|
 |US Central|US-C|Atlanta|Piedmont|
 |US Central|US-C|Dallas|Ammo|
