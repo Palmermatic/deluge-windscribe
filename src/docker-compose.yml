@@ -6,6 +6,7 @@ services:
     environment:
       - windscribe_username=${WINDSCRIBE_USERNAME?Variable WINDSCRIBE_USERNAME not set}
       - windscribe_password=${WINDSCRIBE_PASSWORD?Variable WINDSCRIBE_PASSWORD not set}
+      - windscribe_location=${WINDSCRIBE_LOCATION?best}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - config:/config
