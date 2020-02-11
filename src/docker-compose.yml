@@ -1,0 +1,59 @@
+version: '3.3'
+
+services:
+  deluge-windscribe:
+    image: deluge-windscribe/deluge-windscribe:latest
+    environment:
+      - windscribe_username=${WINDSCRIBE_USERNAME?Variable WINDSCRIBE_USERNAME not set}
+      - windscribe_password=${WINDSCRIBE_PASSWORD?Variable WINDSCRIBE_PASSWORD not set}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - config:/config
+      - downloads:/downloads
+    ports:
+      - 8112:8112
+      - 58846:58846
+    networks:
+      - net
+      - traefik-public
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.frontend.rule=Host:${DOMAIN?Variable DOMAIN not set}
+        - traefik.enable=true
+        - traefik.port=8080
+        - traefik.tags=traefik-public
+        - traefik.docker.network=traefik-public
+        # Traefik service that listens to HTTP
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        # Traefik service that listens to HTTPS
+        - traefik.webservice.frontend.entryPoints=https
+
+networks:
+  net:
+    driver: overlay
+    attachable: true
+  traefik-public:
+    external: true
+
+volumes:
+  config:
+    driver_opts:
+      type: "nfs"
+      o: "addr=10.11.12.13,nolock,soft,rw"
+      device: ":/volume1/docker/deluge-windscribe/config"
+  downloads:
+    driver_opts:
+      type: "nfs"
+      o: "addr=10.11.12.13,nolock,soft,rw"
+      device: ":/volume1/share/downloads"
