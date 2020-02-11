@@ -17,6 +17,10 @@ services:
     networks:
       - net
       - traefik-public
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
     deploy:
       resources:
         limits:
