@@ -22,6 +22,7 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     deploy:
+      replicas: 2
       resources:
         limits:
           cpus: '1.0'
@@ -32,6 +33,8 @@ services:
       placement:
         constraints:
           - node.role == manager
+        preferences:
+          - spread: node.id
       labels:
         - traefik.frontend.rule=Host:${DOMAIN?Variable DOMAIN not set}
         - traefik.enable=true
