@@ -68,8 +68,9 @@ the Windscribe service has enough permissions to change the network configuratio
 | DEL_PORT | 58846 | The port the Daemon runs on. |
 | DEL_UID | 1000 | The ID used for the main deluge user account. Changing this value could break the config folder. |
 | DEL_GID | 1000 | The ID used for the main deluge group account. Changing this value could break the config folder. |
-| VPN_AUTH | /config/auth.conf | The path for the auth.conf which should store the username and password. If the file is not found, the application will still try to connect to the Windscribe server. |
-| HOME | /config | The path to the home directory.|
+| WINDSCRIBE_USERNAME | Windscribe login. |
+| WINDSCRIBE_PASSWORD | Windscribe password. |
+| HOME | /config | The path to the home directory. |
 
 ### Windscribe Location Options
 You may use any of the values to select a location. The Label column allows connecting directly to a single VPN location.
