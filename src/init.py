@@ -5,21 +5,10 @@ import pexpect
 print('Initializing Container')
 
 if os.getenv('VPN_ENABLE', True):
-    vpnAuth = os.getenv('VPN_AUTH', "/config/auth.conf")
+    vpnAuth = os.getenv('VPN_AUTH', True)
+    username = os.getenv('WINDSCRIBE_USERNAME', True)
+    password = os.getenv('WINDSCRIBE_PASSWORD', True)
     location = "best"
-
-    with open(vpnAuth) as f:
-        lines = f.read().splitlines()
-        lineCount = len(lines)
-
-        if lineCount < 2:
-            raise Exception("auth.conf is malformed. Please ensure that the file is configured correctly so that "
-                            "windscribe can login.")
-        username = lines[0]
-        password = lines[1]
-
-        if lineCount >= 3:
-            location = lines[2]
 
     subprocess.run(["windscribe", "start"])
 
